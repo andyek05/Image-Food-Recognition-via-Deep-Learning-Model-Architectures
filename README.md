@@ -8,7 +8,7 @@ A deep learning benchmark and inference repository for multi-class food image cl
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com
+git clone https://github.com/andyek05/Image-Food-Recognition-via-Deep-Learning-Model-Architectures
 cd Image-Food-Recognition-via-Deep-Learning-Model-Architectures
 ```
 
@@ -98,7 +98,7 @@ This repository tracks architectures across four distinct design paradigms:
 
 The raw Food-101 image directory (`~5 GB`) is excluded via `.gitignore`. To retrain models from scratch:
 
-1. Download the [Food-101 Dataset](https://ethz.ch).
+1. Download the [Food-101 Dataset](https://www.kaggle.com/datasets/dansbecker/food-101).
 2. Extract the `images/` folder into `data/images/`.
 3. Run any training script inside `src/`:
    ```bash
