@@ -1,0 +1,13 @@
+# Datasets
+images/
+data/images/
+
+# OS & WSL artifacts
+.DS_Store
+*:Zone.Identifier
+
+# Python cache & environments
+__pycache__/
+*.pyc
+.venv/
+venv/
