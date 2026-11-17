@@ -4,6 +4,30 @@ A deep learning benchmark and inference repository for multi-class food image cl
 
 ---
 
+## Quick Start
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com
+cd Image-Food-Recognition-via-Deep-Learning-Model-Architectures
+```
+
+### 2. Install Dependencies
+```bash
+pip install tensorflow numpy pillow scikit-learn
+```
+
+### 3. Run Inference on a Sample Image
+Run with **EfficientNetB0** (default, best for real-world photos):
+```bash
+python3 src/predict.py samples/my-special-order-pizza.jpg
+```
+
+Or switch to **MobileNetV2**:
+```bash
+python3 src/predict.py samples/my-special-order-pizza.jpg --model mobilenetv2
+```
+
 ## Model Benchmark Comparison
 
 All models were trained and evaluated on the **Food-101** test split (101 food categories, 25,250 test images) at `224 × 224` resolution.
@@ -31,7 +55,6 @@ This repository tracks architectures across four distinct design paradigms:
 ### 1. Lightweight & Mobile Architectures
 *Minimizing parameters and maximizing inference speed for mobile food-tracking apps and edge devices.*
 - [x] **MobileNetV2**
-- [ ] **MobileNetV3**
 - [ ] **ShuffleNetV2**
 
 ### 2. Classical Residual & Dense CNNs
@@ -70,28 +93,6 @@ This repository tracks architectures across four distinct design paradigms:
 ├── LICENSE
 └── README.md
 ```
-
----
-
-## Quick Start
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com
-cd Image-Food-Recognition-via-Deep-Learning-Model-Architectures
-```
-
-### 2. Install Dependencies
-```bash
-pip install tensorflow numpy pillow scikit-learn
-```
-
-### 3. Run Inference on a Sample Image
-```bash
-python src/predict.py --image samples/my-special-order-pizza.jpg
-```
-
----
 
 ## Dataset Setup
 
