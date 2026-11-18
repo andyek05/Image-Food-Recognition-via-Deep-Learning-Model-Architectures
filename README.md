@@ -36,6 +36,7 @@ All models were trained and evaluated on the **Food-101** test split (101 food c
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **MobileNetV2** | Lightweight Mobile | **74.93%** | **75.83%** | **75.02%** | **74.99%** | 22.9 MB | Completed |
 | **EfficientNetB0** | NAS-Optimized CNN | 73.26% | 73.81% | 73.34% | 73.30% | 39.1 MB | Completed |
+| **ResNet50** | Classic Residual CNN | 68.26% | 69.45% | 68.43% | 68.29% | 212.1 MB | Completed |
 
 ---
 
