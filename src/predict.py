@@ -11,6 +11,7 @@ CLASS_MAPPING_PATH = os.path.join(BASE_DIR, "configs", "class_mapping.json")
 MODEL_FILES = {
     "efficientnetb0": os.path.join(BASE_DIR, "models", "food_model_efficientnetb0.keras"),
     "mobilenetv2": os.path.join(BASE_DIR, "models", "food_model_mobilenetv2.keras"),
+    "resnet50": os.path.join(BASE_DIR, "models", "food_model_resnet50.keras"),
 }
 
 IMAGE_SIZE = (224, 224)
@@ -57,7 +58,7 @@ if __name__ == "__main__":
     parser.add_argument("image", help="Path to the input food image (e.g., samples/my-special-order-pizza.jpg)")
     parser.add_argument(
         "--model",
-        choices=["efficientnetb0", "mobilenetv2"],
+        choices=list(MODEL_FILES.keys()),
         default="efficientnetb0",
         help="Model architecture to use for inference (default: efficientnetb0)",
     )
