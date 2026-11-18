@@ -2,7 +2,6 @@
 
 A deep learning benchmark and inference repository for multi-class food image classification trained on the **Food-101** dataset. This project systematically builds, evaluates, and compares diverse open-source computer vision architectures—ranging from lightweight mobile CNNs to attention-based hybrids—to analyze trade-offs between validation accuracy, model size, and real-world generalization.
 
----
 
 ## Quick Start
 
@@ -18,14 +17,19 @@ pip install tensorflow numpy pillow scikit-learn
 ```
 
 ### 3. Run Inference on a Sample Image
-Run with **EfficientNetB0** (default, best for real-world photos):
+For running with **EfficientNetB0** (Our preferred choice):
 ```bash
-python3 src/predict.py samples/my-special-order-pizza.jpg
+python3 src/predict.py samples/my-special-order-pizza.jpg --model efficientnetb0
 ```
 
-Or switch to **MobileNetV2**:
+For running with **MobileNetV2**:
 ```bash
 python3 src/predict.py samples/my-special-order-pizza.jpg --model mobilenetv2
+```
+
+For running with **ResNet50**:
+```bash
+python3 src/predict.py samples/my-special-order-pizza.jpg --model resnet50
 ```
 
 ## Model Benchmark Comparison
@@ -60,7 +64,7 @@ This repository tracks architectures across four distinct design paradigms:
 
 ### 2. Classical Residual & Dense CNNs
 *Battle-tested baselines relying on deep residual skip connections and dense feature reuse.*
-- [ ] **ResNet50 / ResNet101**
+- [x] **ResNet50 / ResNet101**
 - [ ] **DenseNet**
 
 ### 3. Advanced Convolutional & NAS-Optimized Models
@@ -82,6 +86,10 @@ This repository tracks architectures across four distinct design paradigms:
 │   └── class_mapping.json          # Class index-to-food label mapping (101 classes)
 ├── data/
 │   └── meta/                       # Train/test split metadata files
+├── logs/                           # Training Logs for viewing epoch & other details during training
+│   ├── EfficientNetB0_training_Food-Classification_Logs.txt
+│   ├── Food_Classification_via_MobileNetV2.ipynb
+│   └── Training_Resnet50_Logs.txt
 ├── models/
 │   ├── food_model_efficientnetb0.keras
 │   └── food_model_mobilenetv2.keras
