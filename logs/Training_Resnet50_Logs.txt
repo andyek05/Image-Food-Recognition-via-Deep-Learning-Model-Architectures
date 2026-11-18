@@ -1,0 +1,141 @@
+(venv) andyek@LENOVOANDYEK:~/food101_gpu/DeepLearning-FoodRecognition$ python3 -c '
+with open("src/train_resnet50.py", "r") as f:
+    text = f.read()
+text = text.replace("tf.data.AUTUNE", "-1")
+with open("src/train_resnet50.py", "w") as f:
+    f.write(text)
+print("✅ Replaced tf.data.AUTUNE with -1")
+' && python3 -u src/train_resnet50.py
+✅ Replaced tf.data.AUTUNE with -1
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794933454.714206    1287 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+✅ SUCCESS: TensorFlow is using GPU -> /physical_device:GPU:0
+Using local image directory: /home/andyek/food101_gpu/DeepLearning-FoodRecognition/images
+
+Loading dataset split (validation_split=0.1, seed=42)...
+Found 101000 files belonging to 101 classes.
+Using 90900 files for training.
+I0000 00:00:1794933468.865044    1287 gpu_device.cc:2036] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 3618 MB memory:  -> device: 0, name: NVIDIA GeForce RTX 3050 6GB Laptop GPU, pci bus id: 0000:01:00.0, compute capability: 8.6
+Found 101000 files belonging to 101 classes.
+Using 10100 files for validation.
+
+Found 101 classes.
+Saved 'configs/class_mapping.json'.
+Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/resnet/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5
+94765736/94765736 ━━━━━━━━━━━━━━━━━━━━ 18s 0us/step
+Model: "functional_1"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                  ┃ Output Shape              ┃         Param # ┃ Connected to               ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ input_layer_1 (InputLayer)    │ (None, 224, 224, 3)       │               0 │ -                          │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ sequential (Sequential)       │ (None, 224, 224, 3)       │               0 │ input_layer_1[0][0]        │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ get_item (GetItem)            │ (None, 224, 224)          │               0 │ sequential[0][0]           │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ get_item_1 (GetItem)          │ (None, 224, 224)          │               0 │ sequential[0][0]           │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ get_item_2 (GetItem)          │ (None, 224, 224)          │               0 │ sequential[0][0]           │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ stack (Stack)                 │ (None, 224, 224, 3)       │               0 │ get_item[0][0],            │
+│                               │                           │                 │ get_item_1[0][0],          │
+│                               │                           │                 │ get_item_2[0][0]           │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ add (Add)                     │ (None, 224, 224, 3)       │               0 │ stack[0][0]                │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ resnet50 (Functional)         │ (None, 7, 7, 2048)        │      23,587,712 │ add[0][0]                  │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ global_average_pooling2d      │ (None, 2048)              │               0 │ resnet50[0][0]             │
+│ (GlobalAveragePooling2D)      │                           │                 │                            │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ batch_normalization           │ (None, 2048)              │           8,192 │ global_average_pooling2d[… │
+│ (BatchNormalization)          │                           │                 │                            │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ dropout (Dropout)             │ (None, 2048)              │               0 │ batch_normalization[0][0]  │
+├───────────────────────────────┼───────────────────────────┼─────────────────┼────────────────────────────┤
+│ dense (Dense)                 │ (None, 101)               │         206,949 │ dropout[0][0]              │
+└───────────────────────────────┴───────────────────────────┴─────────────────┴────────────────────────────┘
+ Total params: 23,802,853 (90.80 MB)
+ Trainable params: 211,045 (824.39 KB)
+ Non-trainable params: 23,591,808 (90.00 MB)
+
+--- STAGE 1: Training Top Head (10 Epochs) ---
+/home/andyek/food101_gpu/venv/lib/python3.14/site-packages/keras/src/trainers/epoch_iterator.py:74: UserWarning: `shuffle=True` was passed, but will be ignored since the data `x` was provided as a tf.data.Dataset. The Dataset is expected to already be shuffled (via `.shuffle(buffer_size)`).
+  self.data_adapter = data_adapters.get_data_adapter(
+Epoch 1/10
+I0000 00:00:1794933515.025831    1376 cuda_dnn.cc:442] Loaded cuDNN version 92700
+   1/2841 ━━━━━━━━━━━━━━━━━━━━ 15:30:45 20s/step - accuracy: 0.0312 - loss: 5.3618W0000 00:00:1794933520.009390    1287 prefetch_dataset_op.cc:476] SEVERE STARVATION: Element UID 1794933500502872355 in buffer 'PrefetchDataset/_18' sat unconsumed for 19.3728 seconds!
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 209ms/step - accuracy: 0.4939 - loss: 2.0660W0000 00:00:1794934115.060202    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 678s 232ms/step - accuracy: 0.4939 - loss: 2.0660 - val_accuracy: 0.5950 - val_loss: 1.6162 - learning_rate: 0.0010
+Epoch 2/10
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 207ms/step - accuracy: 0.5995 - loss: 1.5636W0000 00:00:1794934768.386171    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 647s 227ms/step - accuracy: 0.5995 - loss: 1.5636 - val_accuracy: 0.6220 - val_loss: 1.5251 - learning_rate: 0.0010
+Epoch 3/10
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 188ms/step - accuracy: 0.6294 - loss: 1.4273W0000 00:00:1794935359.754299    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 590s 208ms/step - accuracy: 0.6294 - loss: 1.4273 - val_accuracy: 0.6306 - val_loss: 1.4907 - learning_rate: 0.0010
+Epoch 4/10
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 187ms/step - accuracy: 0.6471 - loss: 1.3487W0000 00:00:1794935945.631944    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 587s 207ms/step - accuracy: 0.6471 - loss: 1.3487 - val_accuracy: 0.6366 - val_loss: 1.4852 - learning_rate: 0.0010
+Epoch 5/10
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 188ms/step - accuracy: 0.6607 - loss: 1.2872W0000 00:00:1794936536.946339    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 589s 207ms/step - accuracy: 0.6607 - loss: 1.2872 - val_accuracy: 0.6402 - val_loss: 1.4926 - learning_rate: 0.0010
+Epoch 6/10
+W0000 00:00:1794936591.738870    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 185ms/step - accuracy: 0.6698 - loss: 1.2422W0000 00:00:1794937118.538861    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+
+Epoch 6: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 581s 205ms/step - accuracy: 0.6698 - loss: 1.2422 - val_accuracy: 0.6362 - val_loss: 1.4954 - learning_rate: 0.0010
+Epoch 7/10
+W0000 00:00:1794937173.216140    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 186ms/step - accuracy: 0.7000 - loss: 1.1213W0000 00:00:1794937700.850130    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 583s 205ms/step - accuracy: 0.7000 - loss: 1.1213 - val_accuracy: 0.6507 - val_loss: 1.4335 - learning_rate: 5.0000e-04
+Epoch 8/10
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 187ms/step - accuracy: 0.7070 - loss: 1.0917W0000 00:00:1794938287.896813    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 587s 207ms/step - accuracy: 0.7070 - loss: 1.0917 - val_accuracy: 0.6518 - val_loss: 1.4364 - learning_rate: 5.0000e-04
+Epoch 9/10
+W0000 00:00:1794938343.491224    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 187ms/step - accuracy: 0.7115 - loss: 1.0716W0000 00:00:1794938873.617383    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+
+Epoch 9: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 586s 206ms/step - accuracy: 0.7115 - loss: 1.0716 - val_accuracy: 0.6506 - val_loss: 1.4393 - learning_rate: 5.0000e-04
+Epoch 10/10
+W0000 00:00:1794938929.316133    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 187ms/step - accuracy: 0.7271 - loss: 1.0083W0000 00:00:1794939460.089627    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 587s 207ms/step - accuracy: 0.7271 - loss: 1.0083 - val_accuracy: 0.6602 - val_loss: 1.4082 - learning_rate: 2.5000e-04
+
+--- STAGE 2: Fine-Tuning ResNet50 Top Layers (12 Epochs) ---
+Epoch 1/12
+W0000 00:00:1794939526.245489    1370 bfc_allocator.cc:470] Garbage collection: deallocate free memory regions (i.e., allocations) so that we can re-allocate a larger region to avoid OOM due to memory fragmentation. If you see this message frequently, you are running near the threshold of the available device memory and re-allocation may incur great performance overhead. You may try smaller batch sizes to observe the performance impact. Set TF_ENABLE_GPU_GARBAGE_COLLECTION=false if you'd like to disable this feature.
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 231ms/step - accuracy: 0.7430 - loss: 0.9453W0000 00:00:1794940183.161628    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 724s 252ms/step - accuracy: 0.7430 - loss: 0.9453 - val_accuracy: 0.6728 - val_loss: 1.3263 - learning_rate: 1.0000e-05
+Epoch 2/12
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 232ms/step - accuracy: 0.7687 - loss: 0.8430W0000 00:00:1794940901.200645    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 716s 252ms/step - accuracy: 0.7687 - loss: 0.8430 - val_accuracy: 0.6826 - val_loss: 1.2989 - learning_rate: 1.0000e-05
+Epoch 3/12
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 232ms/step - accuracy: 0.7904 - loss: 0.7571W0000 00:00:1794941617.235391    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 715s 252ms/step - accuracy: 0.7904 - loss: 0.7571 - val_accuracy: 0.6875 - val_loss: 1.3224 - learning_rate: 1.0000e-05
+Epoch 4/12
+W0000 00:00:1794941672.757478    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 231ms/step - accuracy: 0.8074 - loss: 0.6894W0000 00:00:1794942328.303367    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+
+Epoch 4: ReduceLROnPlateau reducing learning rate to 4.999999873689376e-06.
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 711s 250ms/step - accuracy: 0.8074 - loss: 0.6894 - val_accuracy: 0.6859 - val_loss: 1.3693 - learning_rate: 1.0000e-05
+Epoch 5/12
+W0000 00:00:1794942383.829491    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 0s 230ms/step - accuracy: 0.8333 - loss: 0.5903W0000 00:00:1794943038.291888    1287 prefetch_autotuner.cc:56] Prefetch autotuner tried to allocate 33554688 bytes after encountering the first element of size 33554688 bytes.This already causes the autotune ram budget to be exceeded. To stay within the ram budget, either increase the ram budget or reduce element size
+2841/2841 ━━━━━━━━━━━━━━━━━━━━ 710s 250ms/step - accuracy: 0.8333 - loss: 0.5903 - val_accuracy: 0.6905 - val_loss: 1.3770 - learning_rate: 5.0000e-06
+
+Saved final trained model file as 'models/food_model_resnet50.keras'
+
+==================================================
+COMPUTING F1-SCORE & DETAILED EVALUATION METRICS
+==================================================
+
+--- MODEL EVALUATION SUMMARY (RESNET50) ---
+Top-1 Accuracy : 68.26%
+Macro Precision: 69.45%
+Macro Recall   : 68.43%
+Macro F1-Score : 68.29%
+==================================================
+(venv) andyek@LENOVOANDYEK:~/food101_gpu/DeepLearning-FoodRecognition$
