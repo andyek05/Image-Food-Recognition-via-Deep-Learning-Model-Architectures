@@ -1,0 +1,10 @@
+✅ SUCCESS: PyTorch is using GPU -> NVIDIA GeForce RTX 3050 6GB Laptop GPU
+Using local image directory: /home/andyek/food101_gpu/DeepLearning-FoodRecognition/images
+
+Loading dataset split (validation_split=0.1, seed=42)...
+Found 101000 files belonging to 101 classes.
+Using 90900 files for training.
+Using 10100 files for validation.
+
+Saved 'configs/class_mapping.json'.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
